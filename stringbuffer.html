@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> String Buffer Test </title>
+<script type="text/javascript">
+//<![CDATA[
+	var makeStringBuffer = function() {
+		var __string__ = [];
+
+		return {
+			append: function(str) {
+				__string__.push(str);
+			},
+
+			toString: function() {
+				return __string__.join("");
+			}
+		}
+	};
+
+	function a() {
+		var d1 = new Date();
+		var str = "";
+		var sTestString = document.getElementById('tstring').value;
+		var nLimitCount = parseInt(document.getElementById('tcount').value);
+		for (var i=0; i < nLimitCount; i++) {
+			str += sTestString;
+		}
+		var d2= new Date();
+
+		document.getElementById("divResult").innerHTML += "<br>Concatenation with plus: " + (d2.getTime() - d1.getTime()) + " milliseconds";
+	}
+
+	function b() {
+		var oBuffer = makeStringBuffer();
+		var rBuf = [];
+		var d1 = new Date();
+		var sTestString = document.getElementById('tstring').value;
+		var nLimitCount = parseInt(document.getElementById('tcount').value);
+		for (var i=0; i < nLimitCount; i++) {
+			oBuffer.append(sTestString);
+		}
+		var sResult =  oBuffer.toString();
+		var d2 = new Date();
+		document.getElementById("divResult").innerHTML += "<br>Concatenation with Array.join: " + (d2.getTime() - d1.getTime()) + " milliseconds";
+	}
+//]]>
+</script>
+</head>
+
+<body>
+string: <input type="text" name="tstring" id="tstring" style="width:400px;" /><br /> loop count: <input type="text" name="tcount" id="tcount" /><br />
+<input type="button" value="+ concatenation" onclick="a()"/><br />
+<input type="button" value="Array.join Concatenation" onclick="b()" />
+<div id="divResult"></div>
+</body>
+</html>
